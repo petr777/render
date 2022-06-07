@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+
+############# Generals #############
+  nginx-render:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx-render
+    ports:
+      - 80:80
+    depends_on:
+      - render
+    networks:
+      - backend
+
+  render:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: render
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
